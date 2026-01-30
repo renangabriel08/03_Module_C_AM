@@ -17,6 +17,7 @@ class _ExhibitState extends State<Exhibit> {
   PageController controller = PageController(viewportFraction: .8);
 
   List dados = [];
+  int index = 0;
 
   Future<void> startApp() async {
     String json = await rootBundle.loadString('assets/data/artworks.json');
@@ -50,7 +51,10 @@ class _ExhibitState extends State<Exhibit> {
                     height: height * .5,
                     child: PageView(
                       controller: controller,
-                      onPageChanged: (value) => setState(() {}),
+                      onPageChanged: (value) {
+                        index = value;
+                        setState(() {});
+                      },
                       children: [
                         for (var dado in dados)
                           Padding(
@@ -156,7 +160,7 @@ class _ExhibitState extends State<Exhibit> {
                         Transform.translate(
                           offset: Offset(0, 30),
                           child: Text(
-                            dados[controller.page?.toInt() ?? 0]['comment'],
+                            dados[index]['comment'],
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.white, fontSize: 14),
                           ),
